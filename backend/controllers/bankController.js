@@ -36,16 +36,14 @@ const getFilterData = asyncHandler(async (req, res) => {
             throw err;
           }
           const query = req.query;
-          console.log(query);
           const filteredData = csvData.filter(data => {
             for (const key in query) {
               if (data[key] !== query[key]) {
-                return false;
+                res.status(400).json({message:'Ticker does not exist'})
               }
             }
             return true;
           });
-          console.log(filteredData.length);
           res.status(200).json({message:'getting infos', data: filteredData})
         });
       });

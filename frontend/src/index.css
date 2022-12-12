@@ -182,6 +182,46 @@ h3 {
   align-items: center;
 }
 
+table {
+  height:500px;
+	border-collapse: collapse;
+  font-family: Tahoma, Geneva, sans-serif;
+  overflow: scroll;
+  display:block;
+  margin-bottom:20px;
+  border-style: double;
+}
+
+
+
+table td {
+	padding: 15px;
+}
+
+table thead{
+  padding: 0.50 rem;
+  border: 1px solid #54585d;
+}
+
+#headrow {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 1;
+}
+
+th, td {
+  padding: 20px;
+
+  border: 1px solid #ccc;
+}
+table tbody tr {
+	background-color: #f9fafb;
+}
+table tbody tr:nth-child(odd) {
+	background-color: #ffffff;
+}
+
 .loadingSpinner {
   width: 64px;
   height: 64px;
@@ -190,6 +230,7 @@ h3 {
   border-radius: 50%;
   animation: spin 1.2s linear infinite;
 }
+
 
 @keyframes spin {
   0% {
