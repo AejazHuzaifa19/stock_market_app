@@ -45,7 +45,7 @@ const getData = asyncHandler(async (req, res) => {
 
 
 const getUploadedFiles = asyncHandler(async (req, res) => {
-  console.log('getuplaoded data');
+  console.log('a call made')
   fileUploadModel.find({ email: "huzaifaaejaz@gmail.com" }, (err, result) => {
     if (err) {
       res.send(err);
@@ -115,18 +115,17 @@ const setInfo = asyncHandler(async (req, res) => {
 
 
 const uploadFile = asyncHandler(async (req, res) => {
-  console.log(req.body);
   /*if(!req.body.text){
       res.status(400)
       throw new Error('please add a text field')
   }*/
   upload(req, res, (err) => {
-    console.log('here');
     if (err) {
       console.log(err);
     }
     else {
       console.log('here2 ');
+      console.log(req.body.filename);
       const newFile = new fileUploadModel({
         file: {
           data: req.file.filename,

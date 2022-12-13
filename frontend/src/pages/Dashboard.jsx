@@ -3,6 +3,7 @@
 import DisplayTable from '../app/components/DisplayTable';
 import FileDropdown from '../app/components/FileDropdown';
 import ErrorNotice from '../app/components/ErrorNotice';
+import UploadFile from '../app/components/UploadFile';
 import { useState, useEffect } from 'react'
 function Dashboard() {
   const [searchData, setSearchData] = useState({
@@ -15,6 +16,7 @@ function Dashboard() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const onChange = (e) => {
+    e.preventDefault();
     console.log('name',e.target.name);
     setSearchData((prevState) => ({
       ...prevState,
@@ -79,6 +81,9 @@ function Dashboard() {
       <section className='form'>
         <div className="form-group">
           <form>
+            <div>
+            <UploadFile />
+            </div>
             <div>
               <FileDropdown  onSelect={(e) => onChange(e)} />
             </div>

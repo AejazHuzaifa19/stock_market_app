@@ -2,7 +2,7 @@
 import React from 'react'
 
 function DisplayTable(props) {
-  if (props.jsonData.length == 0) return <>The stock ticker you entered does not exist in the data set.</>;
+  if (props.jsonData.length == 0) return <></>;
   var data = JSON.parse(props.jsonData);
 
   //console.log(data);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 
 function FileDropdown(props) {
     // JSON data
@@ -11,13 +11,11 @@ function FileDropdown(props) {
             .then(data => setResponse(data));
     }, []);
 
-    // Use the useState hook to store the selected value
-    const [selectedValue, setSelectedValue] = useState(null);
-
     // Handle the change event of the dropdown
     const handleChange = (event) => {
         props.onSelect(event);
     }
+
     if (!(Array.isArray(response) && response.length > 0)) {
         return <></>
     }
