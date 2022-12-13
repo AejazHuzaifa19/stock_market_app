@@ -1,15 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const {getData,getFilterData,updateInfo, deleteInfo, setInfo} = require('../controllers/bankController')
+const { getData, getFilterData, getUploadedFiles, uploadFile, updateInfo, deleteInfo, setInfo } = require('../controllers/bankController')
 
-router.get('/',getData);
+router.get('/', getData);
 
-router.get('/filter',getFilterData);
+router.get('/getUploadedFiles', getUploadedFiles)
 
-router.post('/',setInfo);
+router.get('/filter', getFilterData);
 
-router.put('/:id',updateInfo);
+router.post('/', setInfo);
 
-router.delete('/:id',deleteInfo);
+router.post('/upload', uploadFile);
+
+router.put('/:id', updateInfo);
+
+router.delete('/:id', deleteInfo);
 
 module.exports = router;

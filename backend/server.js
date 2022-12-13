@@ -1,6 +1,8 @@
 const express = require('express');
 const colors = require('colors');
 const dotenv = require('dotenv').config()
+const multer = require('multer')
+
 
 const {errorHandler} = require('./middleware/errorMiddleware')
 const connectDB = require('./config/db');
@@ -20,6 +22,7 @@ app.use((req, res, next) => {
 
 
 app.use('/api/process', require('./routes/bankRoutes'));
+
 
 
 app.use(errorHandler)

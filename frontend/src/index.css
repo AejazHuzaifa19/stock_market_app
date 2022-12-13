@@ -231,6 +231,23 @@ table tbody tr:nth-child(odd) {
   animation: spin 1.2s linear infinite;
 }
 
+.error-icon {
+  height: 30px;
+  width: 30px;
+  background-image: url('../public/icons8-medium-risk-30.png');
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.error-notice{
+  border: 2px solid red;
+  border-radius: 5px;
+  padding: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
 
 @keyframes spin {
   0% {
