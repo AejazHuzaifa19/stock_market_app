@@ -1,33 +1,35 @@
 import React, { useState } from 'react'
 
-function UploadFile() {
+function UploadFile(props) {
     const [file, setFile] = useState(null);
-    const [filename,setFileName] = useState(null);
+    const [filename, setFileName] = useState(null);
 
     function handleFileSelect(event) {
         event.preventDefault(event.target.files[0]);
-        console.log(event.target.files[0])
         setFileName(event.target.files[0].name);
         setFile(event.target.files[0]);
     }
 
-    function handleUpload() {
-        // upload the file to a server or do something else with it here
+    function handleUpload(e) {
+        e.preventDefault();
         const formData = new FormData();
-        console.log('asd');
+        let email = props.email || localStorage.getItem('email');
         formData.append('filename', filename);
         formData.append('uploadedfile', file);
-        console.log(formData)
-        return fetch('http://localhost:5000/api/process/upload', {
+        formData.append('email', email);
+        fetch('http://localhost:5000/api/process/upload', {
             method: 'POST',
             body: formData
-        }).then(response => console.log(response));
+        }).then(resp => resp.json()
+        ).then(data => {
+            props.updateUploadedFiles(data.filename);
+        });
     }
 
     return (
         <div>
             <input type="file" onChange={handleFileSelect} />
-            <button onClick={handleUpload}>Upload</button>
+            <button onClick={(e) => handleUpload(e)}>Upload</button>
         </div>
     );
 }
