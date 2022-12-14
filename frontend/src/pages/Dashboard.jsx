@@ -22,7 +22,7 @@ function Dashboard() {
     }
   }, []);
 
-  const [registered, setRegistered] = useState(true);
+  const [registered, setRegistered] = useState(localStorage.getItem('email'));
 
   const onChange = (e) => {
     e.preventDefault();
@@ -47,7 +47,7 @@ function Dashboard() {
 
     fetchUploadedFiles(email)
     setEmail(email);
-    setRegistered(true);
+    setRegistered(localStorage.getItem('email'));
   }
 
   const updateUploadedFiles = (filename) =>
