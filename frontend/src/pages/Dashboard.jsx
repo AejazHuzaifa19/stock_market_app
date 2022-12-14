@@ -17,12 +17,12 @@ function Dashboard() {
   const [uploadedFiles, setUploadedFiles] = useState(null);
 
   useEffect(() => {
-    return () => {
-      localStorage.removeItem('email');
-    };
+    if(localStorage.getItem('email') != null){
+      fetchUploadedFiles(localStorage.getItem('email'));
+    }
   }, []);
 
-  const [registered, setRegistered] = useState(localStorage.getItem('email'));
+  const [registered, setRegistered] = useState(true);
 
   const onChange = (e) => {
     e.preventDefault();
@@ -45,7 +45,7 @@ function Dashboard() {
       body: data,
     }).then(response => console.log(response));
 
-    fetchUploadedFiles()
+    fetchUploadedFiles(email)
     setEmail(email);
     setRegistered(true);
   }
@@ -56,12 +56,22 @@ function Dashboard() {
     setUploadedFiles(newArray);
   }
 
-  const fetchUploadedFiles = () => {
-    fetch(`http://localhost:5000/api/process/getUploadedFiles?email=${email}`)
+  const fetchUploadedFiles = (email_adress) => {
+    let email_address =  email_adress ? email_adress : email;
+    fetch(`http://localhost:5000/api/process/getUploadedFiles?email=${email_address}`)
     .then(res => {
       return res.json();
     })
-    .then(data => setUploadedFiles(data));
+    .then((json) => {
+      const filenames = json.map(obj => obj.filename);
+      setUploadedFiles(filenames);
+    });
+  }
+
+  const onLogout = (e) =>{
+    e.preventDefault();
+    localStorage.removeItem('email');
+    setRegistered(false);
   }
 
   const onSubmit = (e) => {
@@ -105,7 +115,9 @@ function Dashboard() {
   const { search } = searchData;
   return registered ?
     (
+
       <div>
+        <button className="btn btn-secondary" onClick={onLogout} name="logout">Logout</button>
         <section className='form'>
           <div className="form-group">
             <form>

@@ -36,7 +36,7 @@ const registerEmail = asyncHandler(async (req, res) => {
 const getData = asyncHandler(async (req, res) => {
   let filename = req.query.filename;
   if (filename === '' || !filename) {
-    return res.status(400).json({ status: 400, message: 'Please select a file' })
+    return res.status(400).json({ status: 400, message: 'Please select a file.' })
   }
   const data = fs.readFile(`uploads/${filename}`, 'utf-8', (err, data) => {
     if (err) {
@@ -46,7 +46,7 @@ const getData = asyncHandler(async (req, res) => {
       if (err) {
         return res.status(400).json({ status: 400, message: err.message })
       }
-      res.status(200).json({ message: 'getting infos', data: csvData })
+      res.status(200).json({ message: 'File data fetched successfully.', data: csvData })
     });
   });
 });
@@ -61,6 +61,7 @@ const getUploadedFiles = asyncHandler(async (req, res) => {
     if (err) {
       res.send(err);
     }
+    //res.status(200).json({ message: 'Uploaded files data fetched successfully.', data: result })
     res.send(result)
   });
 });
@@ -74,7 +75,7 @@ const getFilterData = asyncHandler(async (req, res) => {
   let filename = req.query.filename;
 
   if (filename === "" || !filename) {
-    return res.status(400).json({ status: 400, message: 'Please select a file' })
+    return res.status(400).json({ status: 400, message: 'Please select a file.' })
   }
 
   if (!stock || stock === "") {
@@ -100,7 +101,7 @@ const getFilterData = asyncHandler(async (req, res) => {
       if (filteredData.length === 0) {
         return res.status(400).json({ status: 400, message: 'The ticker you entered does not exist in the dataset.' })
       }
-      return res.status(200).json({ message: 'getting infos', data: filteredData })
+      return res.status(200).json({ message: 'Filtered file data fetched successfully.', data: filteredData })
     });
   });
 })
@@ -127,7 +128,7 @@ const uploadFile = asyncHandler(async (req, res) => {
         email: req.body.email
       });
       newFile.save().then((data) => {
-        res.status(200).json({ message: 'successfully uploaded file', filename: data.filename })
+        res.status(200).json({ message: 'Successfully uploaded file.', filename: data.filename })
       }).catch(err => res.status(400).json({ message: err.message }));
     }
   });
