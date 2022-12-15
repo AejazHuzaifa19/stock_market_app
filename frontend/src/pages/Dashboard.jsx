@@ -132,7 +132,7 @@ function Dashboard() {
           </div>
           <div className="form-group">
             <button type='search' className='btn btn-block' onClick={onSubmit}>
-              Search
+              Load Data
             </button>
           </div>
         </section>
