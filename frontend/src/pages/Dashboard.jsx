@@ -4,6 +4,7 @@ import ErrorNotice from '../app/components/ErrorNotice';
 import UploadFile from '../app/components/UploadFile';
 import Register from '../app/components/Register';
 import { useState, useEffect } from 'react'
+import authService from '../service/apiService';
 function Dashboard() {
   const [searchData, setSearchData] = useState({
     search: '',
@@ -57,15 +58,22 @@ function Dashboard() {
   }
 
   const fetchUploadedFiles = (email_adress) => {
-    let email_address =  email_adress ? email_adress : email;
-    fetch(`http://localhost:5000/api/process/getUploadedFiles?email=${email_address}`)
+    let email_address = email_adress ? email_adress : email;
+    let json = authService.fetchFileNames(email_address).then(res => {
+      return res.data;
+    }).then((json) => {
+      const filenames = json.map(obj => obj.filename);
+      setUploadedFiles(filenames);
+    });
+
+   /* fetch(`http://localhost:5000/api/process/getUploadedFiles?email=${email_address}`)
     .then(res => {
       return res.json();
     })
     .then((json) => {
       const filenames = json.map(obj => obj.filename);
       setUploadedFiles(filenames);
-    });
+    });*/
   }
 
   const onLogout = (e) =>{
