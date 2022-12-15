@@ -33,6 +33,7 @@ function Dashboard() {
     }));
   }
 
+  // Registers a new user
   const onRegister = (e, email) => {
     localStorage.setItem('email', email);
     const userData = new URLSearchParams();
@@ -43,12 +44,14 @@ function Dashboard() {
     setRegistered(localStorage.getItem('email'));
   }
 
+  // Appends the uploaded filename to the list of filenames.
   const updateUploadedFiles = (filename) =>
   {
     const newArray = uploadedFiles.concat(filename);
     setUploadedFiles(newArray);
   }
 
+  // Fetches the list of files uploaded by a user
   const fetchUploadedFiles = (email_adress) => {
     let email_address = email_adress ? email_adress : email;
     apiService.fetchFileNames(email_address).then(res => {
@@ -65,6 +68,7 @@ function Dashboard() {
     setRegistered(false);
   }
 
+  
   const onSubmit = (e) => {
     e.preventDefault();
     if (searchData.search === '') {
@@ -97,10 +101,10 @@ function Dashboard() {
       });
     }
   }
+
   const { search } = searchData;
   return registered ?
     (
-  
       <div>
         <button className="btn btn-secondary" onClick={onLogout} name="logout">Logout</button>
         <section className='form'>

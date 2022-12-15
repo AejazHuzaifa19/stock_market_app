@@ -4,9 +4,7 @@ import React from 'react'
 function DisplayTable(props) {
   if (props.jsonData.length === 0) return <></>;
   var data = JSON.parse(props.jsonData);
-
-
-  // Extract the information you want to display
+  // Extract the information to be displayed.
   var columnNames = Object.keys(data[0]);
   var rows = data.map(function (item) {
     return Object.values(item);
