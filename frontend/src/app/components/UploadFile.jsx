@@ -23,15 +23,6 @@ function UploadFile(props) {
             setUploadStatus(true);
             props.updateUploadedFiles(data.data.filename);
         });
-        //done
-        /*fetch('http://localhost:5000/api/process/upload', {
-            method: 'POST',
-            body: formData
-        }).then(resp => resp.json()
-        ).then(data => {
-            setUploadStatus(true);
-            props.updateUploadedFiles(data.filename);
-        });*/
     }
     return (
         <div>

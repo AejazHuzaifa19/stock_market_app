@@ -37,17 +37,7 @@ function Dashboard() {
     localStorage.setItem('email', email);
     const userData = new URLSearchParams();
     userData.append('email', email);
-
     apiService.registerUser(userData)
-     // this is done;
-    /*fetch(`http://localhost:5000/api/process/registerEmail`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      },
-      body: data,
-    }).then(response => console.log(response));*/
-
     fetchUploadedFiles(email)
     setEmail(email);
     setRegistered(localStorage.getItem('email'));
@@ -67,15 +57,6 @@ function Dashboard() {
       const filenames = json.map(obj => obj.filename);
       setUploadedFiles(filenames);
     });
-// done
-   /* fetch(`http://localhost:5000/api/process/getUploadedFiles?email=${email_address}`)
-    .then(res => {
-      return res.json();
-    })
-    .then((json) => {
-      const filenames = json.map(obj => obj.filename);
-      setUploadedFiles(filenames);
-    });*/
   }
 
   const onLogout = (e) =>{
@@ -102,22 +83,6 @@ function Dashboard() {
         setErrorStatus(true);
         setErrorMessage(error.response.data.message)
       });
-      //done
-      /*fetch(`http://localhost:5000/api/process/?filename=${searchData.filename}`)
-        .then(response =>
-          response.json()
-        ).then(data => {
-          if (data.status === 400) {
-            setErrorStatus(true);
-            setErrorMessage(data.message)
-            return;
-          }
-          setErrorStatus(false);
-          setJsonData(JSON.stringify(data.data))
-        })
-        .catch(error => {
-          return { error: error.message };
-        });*/
     }
     else {
       apiService.getFilteredFileData(searchData.search, searchData.filename)
@@ -130,23 +95,6 @@ function Dashboard() {
         setErrorMessage(error.response.data.message)
         return { error: error.message };
       });
-      //done
-      /*fetch(`http://localhost:5000/api/process/filter?stock=${searchData.search}&filename=${searchData.filename}`)
-        .then(response => {
-          return response.json();
-        })
-        .then(data => {
-          if (data.status === 400) {
-            setErrorStatus(true);
-            setErrorMessage(data.message)
-            return;
-          }
-          setErrorStatus(false);
-          setJsonData(JSON.stringify(data.data))
-        })
-        .catch(error => {
-          return { error: error.message };
-        });*/
     }
   }
   const { search } = searchData;
