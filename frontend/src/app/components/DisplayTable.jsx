@@ -5,6 +5,7 @@ function DisplayTable(props) {
   if (props.jsonData.length === 0) return <></>;
   var data = JSON.parse(props.jsonData);
 
+
   // Extract the information you want to display
   var columnNames = Object.keys(data[0]);
   var rows = data.map(function (item) {

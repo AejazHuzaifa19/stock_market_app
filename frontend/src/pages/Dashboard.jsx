@@ -4,7 +4,7 @@ import ErrorNotice from '../app/components/ErrorNotice';
 import UploadFile from '../app/components/UploadFile';
 import Register from '../app/components/Register';
 import { useState, useEffect } from 'react'
-import authService from '../service/apiService';
+import apiService from '../service/apiService';
 function Dashboard() {
   const [searchData, setSearchData] = useState({
     search: '',
@@ -35,16 +35,18 @@ function Dashboard() {
 
   const onRegister = (e, email) => {
     localStorage.setItem('email', email);
-    const data = new URLSearchParams();
-    data.append('email', email);
+    const userData = new URLSearchParams();
+    userData.append('email', email);
 
-    fetch(`http://localhost:5000/api/process/registerEmail`, {
+    apiService.registerUser(userData)
+     // this is done;
+    /*fetch(`http://localhost:5000/api/process/registerEmail`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
       },
       body: data,
-    }).then(response => console.log(response));
+    }).then(response => console.log(response));*/
 
     fetchUploadedFiles(email)
     setEmail(email);
@@ -59,13 +61,13 @@ function Dashboard() {
 
   const fetchUploadedFiles = (email_adress) => {
     let email_address = email_adress ? email_adress : email;
-    authService.fetchFileNames(email_address).then(res => {
+    apiService.fetchFileNames(email_address).then(res => {
       return res.data;
     }).then((json) => {
       const filenames = json.map(obj => obj.filename);
       setUploadedFiles(filenames);
     });
-
+// done
    /* fetch(`http://localhost:5000/api/process/getUploadedFiles?email=${email_address}`)
     .then(res => {
       return res.json();
@@ -85,7 +87,23 @@ function Dashboard() {
   const onSubmit = (e) => {
     e.preventDefault();
     if (searchData.search === '') {
-      fetch(`http://localhost:5000/api/process/?filename=${searchData.filename}`)
+
+      apiService.getFileData(searchData.filename)
+      .then(data => {
+        if (data.status === 400) {
+          setErrorStatus(true);
+          setErrorMessage(data.message)
+          return;
+        }
+        setErrorStatus(false);
+        setJsonData(JSON.stringify(data.data.data))
+      })
+      .catch(error => {
+        setErrorStatus(true);
+        setErrorMessage(error.response.data.message)
+      });
+      //done
+      /*fetch(`http://localhost:5000/api/process/?filename=${searchData.filename}`)
         .then(response =>
           response.json()
         ).then(data => {
@@ -99,10 +117,21 @@ function Dashboard() {
         })
         .catch(error => {
           return { error: error.message };
-        });
+        });*/
     }
     else {
-      fetch(`http://localhost:5000/api/process/filter?stock=${searchData.search}&filename=${searchData.filename}`)
+      apiService.getFilteredFileData(searchData.search, searchData.filename)
+      .then(data => {
+        setErrorStatus(false);
+        setJsonData(JSON.stringify(data.data.data))
+      })
+      .catch(error => {
+        setErrorStatus(true);
+        setErrorMessage(error.response.data.message)
+        return { error: error.message };
+      });
+      //done
+      /*fetch(`http://localhost:5000/api/process/filter?stock=${searchData.search}&filename=${searchData.filename}`)
         .then(response => {
           return response.json();
         })
@@ -117,13 +146,13 @@ function Dashboard() {
         })
         .catch(error => {
           return { error: error.message };
-        });
+        });*/
     }
   }
   const { search } = searchData;
   return registered ?
     (
-
+  
       <div>
         <button className="btn btn-secondary" onClick={onLogout} name="logout">Logout</button>
         <section className='form'>

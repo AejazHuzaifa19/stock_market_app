@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import apiService from '../../service/apiService';
 
 function UploadFile(props) {
     const [file, setFile] = useState(null);
@@ -18,14 +19,19 @@ function UploadFile(props) {
         formData.append('filename', filename);
         formData.append('uploadedfile', file);
         formData.append('email', email);
-        fetch('http://localhost:5000/api/process/upload', {
+        apiService.uploadFile(formData).then(data => {
+            setUploadStatus(true);
+            props.updateUploadedFiles(data.data.filename);
+        });
+        //done
+        /*fetch('http://localhost:5000/api/process/upload', {
             method: 'POST',
             body: formData
         }).then(resp => resp.json()
         ).then(data => {
             setUploadStatus(true);
             props.updateUploadedFiles(data.filename);
-        });
+        });*/
     }
     return (
         <div>
