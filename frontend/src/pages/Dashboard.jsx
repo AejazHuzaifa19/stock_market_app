@@ -59,7 +59,7 @@ function Dashboard() {
 
   const fetchUploadedFiles = (email_adress) => {
     let email_address = email_adress ? email_adress : email;
-    let json = authService.fetchFileNames(email_address).then(res => {
+    authService.fetchFileNames(email_address).then(res => {
       return res.data;
     }).then((json) => {
       const filenames = json.map(obj => obj.filename);
